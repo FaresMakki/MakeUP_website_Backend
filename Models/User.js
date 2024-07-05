@@ -1,4 +1,5 @@
 const mongoose=require("mongoose")
+
 const userSchema=new mongoose.Schema({
     Userid:{
         type:Number,
@@ -29,6 +30,9 @@ const userSchema=new mongoose.Schema({
         required:true
     },
     activationcode:{
+        type:String
+    },
+    activationcodedate:{
         type:String
     },
     isactive:{

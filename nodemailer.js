@@ -8,6 +8,7 @@ const transport=nodemailer.createTransport({
     }
 })
 module.exports.sendConfirmationEmail=(Email,activationcode)=>{
+    console.log(`nodemail code${activationcode}`)
     transport.sendMail({
 
         from: "faresmakki121@gmail.com",
