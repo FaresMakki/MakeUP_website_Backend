@@ -37,6 +37,8 @@ exports.getSousCategory=async (req,res)=>{
     })
 }
 exports.UpdateSousCategory=async (req,res)=>{
+    console.log(req.body)
+    console.log(req.params)
         const newcategorie={
             Name:req.body.Name,
 
@@ -44,7 +46,7 @@ exports.UpdateSousCategory=async (req,res)=>{
 
 
 
-    const id=req.body._id
+    const id=req.params.id
     souscategorymodel.findByIdAndUpdate(id,newcategorie).then((model)=>{
         if(!model){
             res.status(200).json({message:"no souscategory found ",SousCategory:null})
