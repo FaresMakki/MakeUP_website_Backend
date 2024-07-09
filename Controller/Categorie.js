@@ -57,14 +57,21 @@ exports.getcategorys=async (req,res)=>{
 exports.Updatecategory=async (req,res)=>{
     console.log(req.body)
     let newcategorie={}
-if(req.body.icone==="notupdated"){
+if(req.body.icone==="notupdated" && req.body.Name.length>0){
      newcategorie={
         Name:req.body.Name,
 
     }
-}else{
+}else if (req.body.icone!=="notupdated" && req.body.Name.length>0)
+    {
      newcategorie={
         Name:req.body.Name,
+        icone:req.body.icone
+
+    }
+} else if(req.body.icone!=="notupdated" && req.body.Name.length<=0)
+    {
+     newcategorie={
         icone:req.body.icone
 
     }
