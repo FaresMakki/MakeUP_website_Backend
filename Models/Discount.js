@@ -8,6 +8,10 @@ const discountSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    Type_id:{
+        type:String,
+        required:true
+    },
     Discount_perc:{
         type:Number,
         required:true
