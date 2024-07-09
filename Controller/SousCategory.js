@@ -22,7 +22,21 @@ exports.addSousCategory=async (req,res)=>{
 
 }
 exports.getSousCategory=async (req,res)=>{
+if(req.params.id==="all"){
+    souscategorymodel.find().then((model)=>{
+        if(!model){
+            res.status(200).json({message:"no souscategory added ",SousCategorys:null})
+        }else{
+            res.status(200).json({message:"sousCategory list",SousCategorys:model})
+        }
 
+
+    }).catch(function (err) {
+        res.status(400).json({err})
+        console.log("something went wrong")
+    })}
+
+else{
     souscategorymodel.find({Categoryid:req.params.id}).then((model)=>{
         if(!model){
             res.status(200).json({message:"no souscategory added ",SousCategorys:null})
@@ -34,7 +48,7 @@ exports.getSousCategory=async (req,res)=>{
     }).catch(function (err) {
         res.status(400).json({err})
         console.log("something went wrong")
-    })
+    })}
 }
 exports.UpdateSousCategory=async (req,res)=>{
     console.log(req.body)

@@ -7,6 +7,7 @@ const User_router=require("./Route/User")
 const Admin_router=require("./Route/Admin")
 const Category_router=require("./Route/Category")
 const SousCategory_router=require("./Route/SousCategory")
+const types=require("./Route/Types")
 const discount=require("./Route/Discount")
 app.use(cors())
 // app.use(express.json())
@@ -17,6 +18,7 @@ app.use("/admin",Admin_router)
 app.use("/category",Category_router)
 app.use("/souscategory",SousCategory_router)
 app.use("/discount",discount)
+app.use("/types",types)
 
 app.use(express.urlencoded({ extended: true }));
 mongoose.connect('mongodb://127.0.0.1:27017\n/Makeup_Website_database',{
