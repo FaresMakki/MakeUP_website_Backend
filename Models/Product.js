@@ -1,0 +1,43 @@
+const mongoose=require("mongoose")
+const productShema=new mongoose.Schema({
+    product_id:{
+        type:Number,
+        required:true,
+    },
+    Name:{
+        type:String,
+        required:true
+    },
+    Prices:{
+        type:String,
+        required:true
+    },
+    Description:{
+        type:String,
+        required:true
+    },
+    ingredients:{
+        type:String,
+        required:true
+    },
+    Comment_utiliser:{
+        type:String,
+        required:true
+    },
+    effects:{
+        type:String,
+        required:true
+    },
+    brand:{
+        type:String,
+        required:true
+    },
+    typeid:{
+        type:String,
+        required:true
+    }
+
+
+
+},{timestamps:true})
+module.exports=mongoose.model('Products',productShema)

@@ -103,9 +103,7 @@ exports.add=async (req,res)=>{
         } else {
             seqid = cd.last_id;
         }
-const character="123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-let activationcod=uuidv4()
+        let activationcod=uuidv4()
 
         const maintenant = new Date();
 
@@ -147,22 +145,6 @@ let activationcod=uuidv4()
 
 }
 
-// exports.VerifyUser=(req,res)=>{
-//     usermodel.findOne({activationcode:req.params.activationcode}).then((user)=>{
-//         if(!user){
-//             res.status(200).json({message:"impossible de lactivation de votre compte(code est incorrect)"})
-//
-//         }else{
-//             user.isactive=true;
-//             user.save()
-//             res.status(200).json({message:"compte activee avec succee"})
-//
-//
-//
-//         }
-//     }
-//     )
-// }
 exports.VerifyUser=(req,res)=>{
 
     console.log(req.params.activationcode)
