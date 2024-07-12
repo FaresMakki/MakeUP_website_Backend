@@ -3,9 +3,9 @@ const Picture = require('../models/Picture');
 exports.createPicture = async (req, res) => {
     try {
         const model = {
-            PictureId: req.body.PictureId,
             IdProduct: req.body.IdProduct,
-            Pictures: req.body.Pictures
+            Pictures: req.body.Pictures,
+            mainpicture: req.body.mainpicture
         };
         const newPicture = new Picture(model);
         const savedPicture = await newPicture.save();
@@ -35,6 +35,24 @@ exports.getPictureById = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+exports.getPictureByproductid = async (req, res) => {
+    Picture.find({IdProduct:req.params.IdProduct}).then((model)=>{
+        if(!model){
+            res.status(200).json({message:"photos not founded",photo:null})
+        }else{
+            res.status(200).json({message:"photo",photo:model})
+        }
+
+
+    }).catch(function (err) {
+        res.status(400).json({err})
+        console.log("something went wrong")
+    })
+};
+
+
+
+
 
 exports.updatePicture = async (req, res) => {
     try {
@@ -59,3 +77,22 @@ exports.deletePicture = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+exports.getmainpictures=async (req,res)=>
+{
+    Picture.find().select("_id IdProduct mainpicture ").then((model)=>{
+        if(!model){
+            res.status(200).json({message:"photos not founded",photo:null})
+        }else{
+            res.status(200).json({message:"photo",photo:model})
+        }
+
+
+    }).catch(function (err) {
+        res.status(400).json({err})
+        console.log("something went wrong")
+    })
+
+
+
+
+}

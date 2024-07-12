@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 
 const pictureSchema = new mongoose.Schema({
-    PictureId: {
-        type: String,
-        required: true,
-        unique: true
-    },
+
     IdProduct: {
         type: String,
         required: true
@@ -13,9 +9,13 @@ const pictureSchema = new mongoose.Schema({
     Pictures: {
         type: [String],
         required: true
+    },
+    mainpicture: {
+        type: String,
+        required: true
     }
 });
 
-const Picture = mongoose.model('Picture', pictureSchema);
+const Picture = mongoose.model('picture', pictureSchema);
 
 module.exports = Picture;

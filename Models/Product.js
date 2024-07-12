@@ -35,9 +35,16 @@ const productShema=new mongoose.Schema({
     typeid:{
         type:String,
         required:true
+    },
+
+    ratings:[{
+        star:Number,
+        postedby:{type:mongoose.Schema.Types.ObjectId,ref:"User"},
+    },],
+    totalrating:{
+        type:String,
+        default:0
     }
-
-
 
 },{timestamps:true})
 module.exports=mongoose.model('Products',productShema)
