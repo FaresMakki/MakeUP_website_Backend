@@ -1,5 +1,5 @@
 const mongoose=require("mongoose")
-const productShema=new mongoose.Schema({
+const productSchema=new mongoose.Schema({
     product_id:{
         type:Number,
         required:true,
@@ -47,4 +47,4 @@ const productShema=new mongoose.Schema({
     }
 
 },{timestamps:true})
-module.exports=mongoose.model('Products',productShema)
+module.exports=mongoose.model('Products',productSchema)

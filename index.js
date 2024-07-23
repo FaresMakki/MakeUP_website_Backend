@@ -13,6 +13,8 @@ const discount=require("./Route/Discount")
 const product_router=require("./Route/Products")
 const picture=require("./Route/Picture")
 const wholesale=require("./Route/WholeSalePurchases")
+const order=require("./Route/Order")
+const returned_product=require("./Route/ReturnedProduct")
 
 app.use(cors())
 // app.use(express.json())
@@ -28,6 +30,8 @@ app.use("/discount",discount)
 app.use("/types",types)
 app.use("/picture",picture)
 app.use("/wholesale",wholesale)
+app.use("/order",order)
+app.use("/returned_product",returned_product)
 app.use(express.urlencoded({ extended: true }));
 mongoose.connect('mongodb://127.0.0.1:27017\n/Makeup_Website_database',{
     useNewUrlParser:true,
