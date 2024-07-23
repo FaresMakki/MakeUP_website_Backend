@@ -1,18 +1,17 @@
 const Discount = require('../models/Discount');
-
+const moment = require('moment');
 exports.createDiscount = async (req, res) => {
     try {
         const model = {
-            Discount_id: req.body.Discount_id,
             Product_id: req.body.Product_id,
-            Type_id: req.body.Type_id,
-            Discount_perc: req.body.Discount_perc,
-            Start_date: req.body.Start_date,
-            End_date: req.body.End_date,
+            discountper: req.body.discountper,
+            startdate: req.body.startdate,
+            enddate: req.body.enddate,
         };
+
         const newDiscount = new Discount(model);
         const savedDiscount = await newDiscount.save();
-        res.status(200).json({ savedDiscount });
+        res.status(200).json({dis: savedDiscount });
     } catch (err) {
         res.status(400).json({ err });
     }
@@ -20,8 +19,11 @@ exports.createDiscount = async (req, res) => {
 
 exports.getAllDiscounts = async (req, res) => {
     try {
-        const discounts = await Discount.find();
-        res.status(200).json(discounts);
+        const currentDate = moment().format('DD-MM-YYYY');
+        console.log(currentDate)
+        const discounts = await Discount.find({ startdate: { $lte: currentDate } });
+        console.log(discounts)
+        res.status(200).json({ disc: discounts });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

@@ -34,10 +34,13 @@ exports.add=async (req,res)=>{
             totalrating:""
         }
 
+
         const user = new productModel(model);
 
         const sevedproduct = await user.save();
-        res.status(200).json({ sevedproduct });
+        res.status(200).json({prod: sevedproduct });
+
+
     } catch (err) {
         res.status(400).json({ err });
     }
@@ -47,7 +50,7 @@ exports.add=async (req,res)=>{
 }
 exports.Getproduct=async (req,res)=>{
 
-    productModel.find().then((model)=>{
+    await productModel.find().then((model)=>{
             if(!model){
                 res.status(200).json({message:"no product here ",product:null})
             }else{
@@ -65,7 +68,7 @@ exports.Getproduct=async (req,res)=>{
 }
 exports.GetproductbyName=async (req,res)=>{
 
-    productModel.find({ Name: { $regex: req.params.Name, $options: 'i' } }).then((model)=>{
+   await productModel.find({ Name: { $regex: req.params.Name, $options: 'i' } }).then((model)=>{
             if(!model){
                 res.status(200).json({message:"no product here ",product:null})
             }else{
@@ -81,11 +84,29 @@ exports.GetproductbyName=async (req,res)=>{
 
 
 }
+exports.Getproductsbytype=async (req,res)=>{
+    console.log(req.params.type)
+   await productModel.find({ typeid:req.params.type }).then((model)=>{
+            if(!model){
+                res.status(200).json({message:"no product here ",sugg:null})
+            }else{
+                res.status(200).json({message:"products:",sugg:model})
+            }
+
+
+        }).catch(function (err) {
+            res.status(400).json({err})
+            console.log("something went wrong")
+        })
+
+
+
+}
 exports.DeleteProduct=async (req,res)=>{
 
 
     const id=req.params.id
-    productModel.findByIdAndDelete(id).then((model)=>{
+   await productModel.findByIdAndDelete(id).then((model)=>{
         if(!model){
             res.status(200).json({message:"product no found ",product:null})
         }else{
@@ -128,7 +149,7 @@ exports.UpdateProduct=async (req,res)=>{
 
 
     const id=req.params.id
-    productModel.findByIdAndUpdate(id,newprod).then((model)=>{
+   await productModel.findByIdAndUpdate(id,newprod).then((model)=>{
         if(!model){
             res.status(200).json({message:"no category found",product:null})
         }else{
@@ -144,7 +165,25 @@ exports.UpdateProduct=async (req,res)=>{
 
 exports.Getproductbybrand=async (req,res)=>{
 
-    productModel.find({ brand:req.body.brand}).then((model)=>{
+   await productModel.find({ brand:req.body.brand}).then((model)=>{
+        if(!model){
+            res.status(200).json({message:"no product here ",product:null})
+        }else{
+            res.status(200).json({message:"products:",product:model})
+        }
+
+
+    }).catch(function (err) {
+        res.status(400).json({err})
+        console.log("something went wrong")
+    })
+
+
+
+}
+exports.GetproductbyID=async (req,res)=>{
+
+  await  productModel.find({ _id:req.params.id}).then((model)=>{
         if(!model){
             res.status(200).json({message:"no product here ",product:null})
         }else{
@@ -161,52 +200,6 @@ exports.Getproductbybrand=async (req,res)=>{
 
 }
 
-// exports.asyncHandler=async (req,res)=>{
-//     const {_id}=req.params
-//     const {star,prodId}=req.body
-//     let updateRating;
-//     try{
-//         const product=await productModel.findById(prodId)
-//         let alreadyRated=product.ratings.find(
-//             (userId)=>userId.postedby.toString()===_id.toString()
-//         )
-//         if(alreadyRated){
-//              updateRating=await productModel.updateOne(
-//                 {
-//                     ratings:{$elemMatch:alreadyRated}
-//
-//                 },{
-//                     $set:{"ratings.$.star":star}
-//                 },{
-//                     new:true
-//                 }
-//             )
-//
-//         }else {
-//              updateRating=await productModel.findByIdAndUpdate(
-//                 prodId,
-//           {$push:{
-//                   ratings:{
-//                       star:star,
-//                       postedby:_id
-//                   },
-//                   },},{new:true,}
-//             )
-//         }
-//     }catch (err){
-//         throw new Error(err)
-//     }
-//     const getallrating=await productModel.findById(prodId)
-//     let totalRating=getallrating.ratings.length
-//     let ratingsum=getallrating.ratings.map((item)=>item.star).reduce((prev,curr)=>prev+curr,0)
-//     let actualRating=Math.round(ratingsum/totalRating)
-//     await finalrating= productModel.findByIdAndUpdate(prodId,
-//         {
-//             totalrating: actualRating,
-//         },{new:true})
-//
-//     res.status(200).json(finalrating)
-// }
 exports.asyncHandler = async (req, res) => {
     const { _id } = req.params; // Extract _id from req.params
     const { star, prodId } = req.body;
@@ -253,3 +246,28 @@ exports.asyncHandler = async (req, res) => {
         return res.status(500).json({ error: err.message });
     }
 };
+exports.Getproductbyprice=async (req,res)=>{
+
+    try {
+        console.log(req.params.min)
+        const products = await productModel.find({});
+        // Filter products based on price range
+        const filteredProducts = products.filter(product => {
+            const price = parseFloat(product.Prices);
+
+            return price < req.params.min ;
+        });
+
+        if (filteredProducts.length === 0) {
+            res.status(200).json({ message: "No products found in this price range", filteredProducts: null });
+        } else {
+            res.status(200).json({ message: "Products found:", filteredProducts: filteredProducts });
+        }
+    } catch (err) {
+        res.status(400).json({ err });
+        console.log("Something went wrong:", err);
+    }
+
+
+
+}

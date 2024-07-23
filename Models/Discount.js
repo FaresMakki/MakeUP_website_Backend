@@ -1,26 +1,20 @@
 const mongoose=require("mongoose")
 const discountSchema=new mongoose.Schema({
-    Discount_id:{
-        type:String,
-        required:true,
-    },
+
     Product_id:{
         type:String,
         required:true
     },
-    Type_id:{
-        type:String,
-        required:true
-    },
-    Discount_perc:{
+
+    discountper:{
         type:Number,
         required:true
     },
-    Start_date:{
+    startdate:{
         type:String,
         required:true
     },
-    End_date:{
+    enddate:{
         type:String,
         required:true
     },

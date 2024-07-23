@@ -2,14 +2,15 @@ const Picture = require('../models/Picture');
 
 exports.createPicture = async (req, res) => {
     try {
+
         const model = {
             IdProduct: req.body.IdProduct,
-            Pictures: req.body.Pictures,
+            Pictures: req.body.Pictures.map(p=>p.base64Image),
             mainpicture: req.body.mainpicture
         };
         const newPicture = new Picture(model);
         const savedPicture = await newPicture.save();
-        res.status(200).json({ savedPicture });
+        res.status(200).json({ pic:savedPicture });
     } catch (err) {
         res.status(400).json({ err });
     }
@@ -18,8 +19,8 @@ exports.createPicture = async (req, res) => {
 exports.getAllPictures = async (req, res) => {
     try {
         const pictures = await Picture.find();
-        res.status(200).json(pictures);
-    } catch (error) {
+        res.status(200).json({photo:pictures});
+    } catch (error) {//
         res.status(400).json({ error: error.message });
     }
 };
