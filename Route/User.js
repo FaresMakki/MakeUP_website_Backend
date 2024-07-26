@@ -5,5 +5,6 @@ const Admin=require("../Controller/Admin")
 router.get("/login_check/:email/:password",user.checkUser)
 router.post("/signup",user.add)
 router.post("/verifyuser/:activationcode",user.VerifyUser)
+router.get("/getusers",user.Getuser)
 
 module.exports=router

@@ -123,26 +123,28 @@ exports.DeleteProduct=async (req,res)=>{
 
 }
 exports.UpdateProduct=async (req,res)=>{
+    console.log("T_T")
     const newprod={}
-    if (req.body.Name !== "non") {
+    if (req.body.Name !== "") {
         newprod.Name = req.body.Name;
     }
-    if (req.body.Prices !== "non") {
+    if (req.body.Prices !== "") {
         newprod.Prices = req.body.Prices;
     }
-    if (req.body.Description !== "non") {
+    if (req.body.Description !== "") {
         newprod.Description = req.body.Description;
     }
-    if (req.body.ingredients !== "non") {
+    if (req.body.ingredients !== "") {
         newprod.ingredients = req.body.ingredients;
     }
-    if (req.body.Comment_utiliser !== "non") {
+    if (req.body.Comment_utiliser !== "") {
         newprod.Comment_utiliser = req.body.Comment_utiliser;
     }
-    if (req.body.effects !== "non") {
+    if (req.body.effects !== "") {
         newprod.effects = req.body.effects;
     }
-    if (req.body.brand !== "non") {
+
+    if (req.body.brand !== "") {
         newprod.brand = req.body.brand;
     }
 

@@ -5,12 +5,26 @@ exports.createPicture = async (req, res) => {
 
         const model = {
             IdProduct: req.body.IdProduct,
-            Pictures: req.body.Pictures.map(p=>p.base64Image),
+            Pictures: req.body.Pictures.map(p => p.base64Image),
             mainpicture: req.body.mainpicture
         };
-        const newPicture = new Picture(model);
-        const savedPicture = await newPicture.save();
-        res.status(200).json({ pic:savedPicture });
+
+// Find existing document with the same IdProduct
+        let existingPicture = await Picture.findOne({ IdProduct: model.IdProduct });
+
+        if (existingPicture) {
+            // Update the existing document
+            existingPicture.Pictures = model.Pictures;
+            existingPicture.mainpicture = model.mainpicture;
+
+            const updatedPicture = await existingPicture.save();
+            res.status(200).json({ pic: updatedPicture });
+        } else {
+            // Create a new document
+            const newPicture = new Picture(model);
+            const savedPicture = await newPicture.save();
+            res.status(200).json({ pic: savedPicture });
+        }
     } catch (err) {
         res.status(400).json({ err });
     }

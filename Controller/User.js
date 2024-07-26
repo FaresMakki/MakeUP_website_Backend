@@ -161,7 +161,7 @@ exports.VerifyUser=(req,res)=>{
                 console.log(`database time ${user.activationcodedate}`)
                 const differenceEnMillisecondes = maintenant - new Date(user.activationcodedate);
                 console.log(differenceEnMillisecondes)
-                const millisecondesEn24Heures = 20*1000
+                const millisecondesEn24Heures = 60*60*24*1000
 
                 console.log(`the deferance is ${differenceEnMillisecondes - millisecondesEn24Heures}`)
                 if (differenceEnMillisecondes >= millisecondesEn24Heures) {
@@ -208,4 +208,23 @@ exports.VerifyUser=(req,res)=>{
             }
         }
     )
+}
+
+exports.Getuser=async (req,res)=>{
+
+    await usermodel.find().then((model)=>{
+        if(!model){
+            res.status(200).json({users:null})
+        }else{
+            res.status(200).json({users:model})
+        }
+
+
+    }).catch(function (err) {
+        res.status(400).json({err})
+        console.log("something went wrong")
+    })
+
+
+
 }

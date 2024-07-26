@@ -8,29 +8,14 @@ const productSchema = new mongoose.Schema({
 });
 
 const orderSchema = new mongoose.Schema({
-    orderId: {
-        type: Number,
-        required: true,
-        default: 1
-    },
-    creationDate: {
+
+
+    userID: {
         type: String,
-        required: true
-    },
-    userName: {
-        type: String,
-        required: true
-    },
-    userId: {
-        type: String,
-        required: true
-    },
-    orderParent: {
-        type: Number,
         required: true
     },
     products: {
-        type: [productSchema],
+        type: {},
         required: true
     }
 }, { timestamps: true });
